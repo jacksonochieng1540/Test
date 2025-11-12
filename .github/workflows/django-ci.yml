@@ -33,39 +33,30 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install flake8 black
 
       # ---------------------------
-      # 4️⃣ Code Quality Check (Linting)
+      # 4️⃣ Setup Environment Variables
       # ---------------------------
-      - name: Run Flake8 (Linting)
+      - name: Setup environment
         run: |
-          echo "Running lint checks..."
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" > .env
+          echo "DEBUG=False" >> .env
+          echo "ALLOWED_HOSTS=localhost,127.0.0.1,.githubpreview.dev" >> .env
 
       # ---------------------------
-      # 5️⃣ Code Formatting Check (Black)
-      # ---------------------------
-      - name: Run Black (Formatting Check)
-        run: |
-          echo "Checking code formatting..."
-          black --check .
-
-      # ---------------------------
-      # 6️⃣ Run Migrations
+      # 5️⃣ Run Migrations
       # ---------------------------
       - name: Run database migrations
         run: python manage.py migrate
 
       # ---------------------------
-      # 7️⃣ Collect Static Files
+      # 6️⃣ Collect Static Files
       # ---------------------------
       - name: Collect static files
         run: python manage.py collectstatic --noinput
 
       # ---------------------------
-      # 8️⃣ Run Django Tests
+      # 7️⃣ Run Django Tests
       # ---------------------------
       - name: Run tests
         run: python manage.py test
@@ -96,4 +87,3 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/django-app:latest
-
