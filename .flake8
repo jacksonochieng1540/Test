@@ -1,0 +1,16 @@
+[flake8]
+extend-ignore = F821
+exclude = 
+    .git,
+    __pycache__,
+    .env,
+    venv,
+    env,
+    .venv,
+    migrations,
+    static,
+    media,
+    *.pyc
+per-file-ignores =
+    venv/*:F821
+    */site-packages/*:F821
