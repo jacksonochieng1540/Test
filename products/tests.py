@@ -5,7 +5,7 @@ from .forms import ProductForm
 from rest_framework.test import APITestCase
 from rest_framework import status
 
-# --- Model Tests ---
+
 class ProductModelTest(TestCase):
     def setUp(self):
         self.product = Product.objects.create(name="Laptop", price=1000)
@@ -14,7 +14,6 @@ class ProductModelTest(TestCase):
         self.assertEqual(self.product.name, "Laptop")
         self.assertEqual(float(self.product.price), 1000.0)
 
-# --- Form Tests ---
 class ProductFormTest(TestCase):
     def test_valid_form(self):
         data = {'name': 'Phone', 'price': 500, 'description': 'Smartphone'}
